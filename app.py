@@ -63,6 +63,8 @@ with col1:
         else:
             st.error('error')
     
+    
+with col2:
     data = fetch_data(jog_api_url)
 
     if data:
@@ -75,29 +77,3 @@ with col1:
     st.altair_chart(scatter_chart, use_container_width=True)
 
     st.dataframe(df)
-with col2:
-    st.header('Journal')
-    st.write('Log your journal here')
-
-    title = st.text_input('Entry Title')
-    mood = st.text_input('How u feeling?')
-    entry = st.text_area('Write about it.')
-
-    if st.button("Log Journal"):
-        response = log_journal(title, mood, entry)
-        if response.status_code == 201:
-            st.success("good")
-
-        else:
-            st.error('error')
-    
-    data = fetch_data(journalapi)
-    df = pd.DataFrame(data)
-    st.data_editor(df, num_rows="dynamic")
-    if data:
-        df = pd.DataFrame(data)
-        scatter_chart = alt.Chart(df).mark_circle().encode(
-            x='mood',
-            y='date',
-        )
-    st.altair_chart(scatter_chart, use_container_width=True)
